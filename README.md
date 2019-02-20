@@ -1,7 +1,7 @@
 # data-demo
 load and query amazon public data pyspark
 
-### Comment
+### Description
 This is a simple docker demo, includes the following api
 - copy an irs990 index file from Amazon public dataset. 
 - view sample data
@@ -25,6 +25,13 @@ Once docker is up, open a browser, go to `localhost:5000`. The home page will gu
 |localhost:5000/api/irs/column| Get column name and datatype|
 |localhost:5000/api/irs/data| Query data. Two parameters needed for query `q` and `max`<br> -`q`: data query<br>-`max`:Maximum number of records retrieved|
 
+### Query example
+| Query | Description |
+|---|---|
+|localhost:5000/api/irs/data | Retrieve all records |
+|localhost:5000/api/irs/data?q={"tax_period":{"eq":"201106"}}&max=10| Retreive 10 records which tax_period equal to "201106"|
+|localhost:5000/api/irs/data?q={"tax_period":{"in":["201106","201109"]}}| Retrieve records which tax_period equal to "201106" or "201109"|
+
 ### Query operators
 This demo provides very basic operator which can be used in query<br>
 
@@ -35,10 +42,5 @@ This demo provides very basic operator which can be used in query<br>
 |`gt`|>| {"tax_period": {"gt":"201106"}}|
 |`in`|Match any value in array| {"tax_period": {"in":["201106","201109"]}} |
 
-### Query example
-| Query | Description |
-|---|---|
-|localhost:5000/api/irs/data | Retrieve all records |
-|localhost:5000/api/irs/data?q={"tax_period":{"eq":"201106"}}&max=10| Retreive 10 records which tax_period equal to "201106"|
-|localhost:5000/api/irs/data?q={"tax_period":{"in":["201106","201109"]}}| Retrieve records which tax_period equal to "201106" or "201109"|
+
 

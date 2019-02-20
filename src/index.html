@@ -3,7 +3,7 @@
 <div>To injest data:
     <ul>
         <li>
-            from browser <a href="http://localhost:5000/api/irs/ingest">http://localhost:5000/api/irs/ingest</a>
+            from browser <a href="http://localhost:5000/api/irs/ingest" target="_blank">http://localhost:5000/api/irs/ingest</a>
         </li>
         <li>
             from shell: curl http://localhost:5000/api/irs/ingest
@@ -14,7 +14,7 @@
 <div>To view sample data:
     <ul>
         <li>
-            from browser <a href="http://localhost:5000/api/irs/sample">http://localhost:5000/api/irs/sample</a>
+            from browser <a href="http://localhost:5000/api/irs/sample" target="_blank">http://localhost:5000/api/irs/sample</a>
         </li>
         <li>
             from shell: curl http://localhost:5000/api/irs/sample
@@ -25,7 +25,7 @@
 <div>To view columns:
     <ul>
         <li>
-            from browser <a href="http://localhost:5000/api/irs/column">http://localhost:5000/api/irs/column</a>
+            from browser <a href="http://localhost:5000/api/irs/column" target="_blank">http://localhost:5000/api/irs/column</a>
         </li>
         <li>
             from shell: curl http://localhost:5000/api/irs/column
@@ -36,7 +36,7 @@
 <div>To query data:(only support limited query options for demo purpose)
     <ul>
         <li>
-            from browser <a href="http://localhost:5000/api/irs/data?max=10">http://localhost:5000/api/irs/data?max=10</a>
+            from browser <a href="http://localhost:5000/api/irs/data?max=10" target="_blank">http://localhost:5000/api/irs/data?max=10</a>
             (retrieve 10 records)
         </li>
         <li>
@@ -44,6 +44,26 @@
         </li>
     </ul>
 
+    <h4>Query Example</h4>
+    <table style="text-align:left;" cellspacing="10px">
+        <tr style="background-color:lightgray;">
+            <th>Query</th>
+            <th>Description</th>
+        </tr>
+        <tr style="border-bottom: 1px solid #ccc;">
+            <td><a href="http://localhost:5000/api/irs/data" target="_blank">http://localhost:5000/api/irs/data</a></td>
+            <td>retrieve all data</td>
+        </tr>
+        <tr>
+            <td><a href="http://localhost:5000/api/irs/data?q={%22tax_period%22:{%22eq%22:%22201106%22}}&max=10" target="_blank">http://localhost:5000/api/irs/data?q={"tax_period":{"eq":"201106"}}&max=10</a></td>
+            <td>retreive 10 records which tax_period equal to "201106"</td>
+        </tr>
+        <tr>
+            <td><a href="http://localhost:5000/api/irs/data?q={%22tax_period%22:{%22in%22:[%22201106%22,%22201109%22]}}" target="_blank">http://localhost:5000/api/irs/data?q={"tax_period":{"in":["201106","201109"]}}</a></td>
+            <td>retrieve records which tax_period equal to "201106" or "201109"</td>
+        </tr>
+    </table>
+    
     <table style="text-align:left;" cellspacing="10px">
         <tr style="background-color:lightgray;">
             <th>Parameter</th>
@@ -90,24 +110,6 @@
         </tr>
     </table>
 
-    <h4>Query Example</h4>
-    <table style="text-align:left;" cellspacing="10px">
-        <tr style="background-color:lightgray;">
-            <th>Query</th>
-            <th>Description</th>
-        </tr>
-        <tr style="border-bottom: 1px solid #ccc;">
-            <td>http://localhost:5000/api/irs/data</td>
-            <td>retrieve all data</td>
-        </tr>
-        <tr>
-            <td>http://localhost:5000/api/irs/data?q={"tax_period":{"eq":"201106"}}&max=10</td>
-            <td>retreive 10 records which tax_period equal to "201106"</td>
-        </tr>
-        <tr>
-            <td>http://localhost:5000/api/irs/data?q={"tax_period":{"in":["201106","201109"]}}</td>
-            <td>retrieve records which tax_period equal to "201106" or "201109"</td>
-        </tr>
-    </table>
+
 
 </div>

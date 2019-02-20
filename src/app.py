@@ -16,7 +16,7 @@ app = Flask(__name__)
 sc = pyspark.SparkContext()
 sql =pyspark.SQLContext(sc)
 
-#   get columns metadata
+#   get columns datatype metadata
 def get_columns_obj():
     tempdata = {}
     with open('temp.json', 'r') as f:
@@ -31,26 +31,34 @@ def generate_sql(req, columns):
         param = json.loads(request.args['q'])
         keys = param.keys()
         if len(keys)>0:
+            # get column name
             col = list(keys)[0]
-            uppercol = col.upper()
-            if not uppercol in columns:
+            col_lower = col.lower()
+
+            # check if column name in query is valid
+            columns_map = {c.lower():c for c in columns}
+            if col_lower not in columns_map:
                 raise ValueError('column {0} not exist'.format(col))
+
+            # get operator
             op_keys = param[col].keys()
             op = list(op_keys)[0]
-            val_data = param[col][op]
             
-            if columns[uppercol] =='string' or columns[uppercol] == 'date':
+            if columns[col.upper()] =='string' or columns[col.upper()] == 'date':
                 format_str = "'{0}'"
             else:
                 format_str = "{0}"
 
+            # get value
+            val_data = param[col][op]
             val = ""
             if (op_map[op]=='in'):
                 val = "({0})".format(','.join(format_str.format(x) for x in val_data))
             else:
                 val = format_str.format(val_data)
 
-            where = " where {0} {1} {2}".format(col, op_map[op], val)
+            # build where clause
+            where = " where {0} {1} {2}".format(columns_map[col_lower], op_map[op], val)
 
     if 'max' in request.args:
         limit = " limit {0}".format(request.args['max'])
@@ -58,7 +66,7 @@ def generate_sql(req, columns):
     sql_str = "select * from irs " + where + limit
     return sql_str
 
-#   retrieve columns of loaded data
+#   retrieve columns and datatype information of loaded data
 @app.route('/api/irs/column', methods=['GET'])
 def get_column_def():
     data = get_columns_obj()
@@ -71,9 +79,11 @@ def get_column_def():
 @app.route('/api/irs/ingest', methods=['GET'])
 def ingest():
     try:
+        # copy file
         subprocess.run(['aws s3 cp s3://irs-form-990/index_2011.csv ../testdata --no-sign-request --quiet'],shell=True)
         df = (sql.read.format("com.databricks.spark.csv").option("header", "true").load("../testdata/index_2011.csv"))
         df.registerTempTable("irs")
+        # save columns datatype information
         with open('temp.json', 'r+') as f:
             tempdata={}
             tempdata["columns"] = dict(df.dtypes)
