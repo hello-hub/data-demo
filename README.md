@@ -9,13 +9,13 @@ This is a simple docker demo, includes the following api
 - do simple query on data
 
 ### Note
-This demo does not support parquet file. If you wish to load parquet file or directly load file from AWS S3, you need to install hadoop
+This is just a simple demo with limited feature. Parquet file loading is not supported. If you wish to load parquet file or directly load file from AWS S3, you need to install hadoop
 
 ### Setup
 copy files to your local, then run `docker-compose up`
 
 ### How to use
-Once docker is up, open a browser, go to `localhost:5000`. The home page will guide you how to call API. You could directly invoke api by click the link on the page or use tools like `curl` and `Postman`
+Once docker is up, open a web browser, go to `localhost:5000`. The home page will guide you how to call API. You could directly invoke api by click the link on the page or use tools like `curl` and `Postman`
 
 ### APIs
 | API | Description |
